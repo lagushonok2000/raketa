@@ -17,6 +17,7 @@ public class PlayerMovement : MonoBehaviour
     private float _step;
     private int _backpressed;
     private Vector3 _rotate;
+    
 
     private void Start()
     {
@@ -33,7 +34,7 @@ public class PlayerMovement : MonoBehaviour
         _fuelStop = value;
         SetStop();
     }
-    public void Move(float value)
+    public void MoveVertical(float value)
     {
         if (_fuelStop) return;
         ResetStop();
@@ -46,14 +47,31 @@ public class PlayerMovement : MonoBehaviour
         _rigidBody.velocity = new Vector2(x, y);
         _flames.Flames();
     }
-    
-    public void Rotate(float value)
+
+    public void MoveHorizontal(float value)
     {
-        if (value == 0) return;
-        _rigidBody.AddTorque(value * -1 * _speedRotate);
-        //_body.Rotate(_rotate * value * -1);
-        //_rigidBody.angularVelocity = 0;
+        if (_fuelStop) return;
+        ResetStop();
+
+        _rigidBody.AddForce(_body.right * value * _speed, ForceMode2D.Impulse);
+
+        var x = Mathf.Clamp(_rigidBody.velocity.x, -_speedLimit, _speedLimit);
+        var y = Mathf.Clamp(_rigidBody.velocity.y, -_speedLimit, _speedLimit);
+
+        _rigidBody.velocity = new Vector2(x, y);
+        _flames.Flames();
     }
+
+    private void Rotate()
+    {
+
+    }
+
+    //public void Rotate(float value)
+    //{
+    //    if (value == 0) return;
+    //    _rigidBody.AddTorque(value * -1 * _speedRotate);
+    //}
 
     public void SetStop()
     {

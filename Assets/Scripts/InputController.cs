@@ -22,7 +22,7 @@ public class InputController : MonoBehaviour
         if (_isPressed == false && value != 0)
         {
             _progressBar.Move();
-            _playerMovement.Move(value);
+            _playerMovement.MoveVertical(value);
         }
         if (value != 0) _isPressed = true;
         if (value == 0) _isPressed = false;
@@ -30,17 +30,18 @@ public class InputController : MonoBehaviour
 
     private void Horizontal(float value)
     {
-        _playerMovement.Rotate(value);
+        //_playerMovement.Rotate(value);
+        _playerMovement.MoveHorizontal(value);
     }
 
     private void LKM()
     {
-        Debug.Log("lkm");
+        
     }
 
     private void PKM()
     {
-        Debug.Log("pkm");
+        
     }
 
     private void Space()
